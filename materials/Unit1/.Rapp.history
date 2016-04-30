@@ -1,0 +1,25 @@
+sd(c(5,8,12))
+which.min(c(4,1,6))
+Sys.setlocale("LC_ALL", "C")
+8*6
+2^16
+2^
+sqrt(2)
+?sqrt
+SquareRoo2 = sqrt(2)
+SquareRoo2
+a <-100*2
+a
+ls()
+getwd()
+USDA = read.csv("USDA.csv")
+USDA
+str(USDA)
+USDA$Sodium
+which.max(USDA$Sodium)
+USDA[265]
+names(USDA)
+USDA$Description[265]
+HighSodium= subset(USDA, Sodium>10000)
+str(HighSodium)
+HighSodium$Description
