@@ -96,6 +96,30 @@ summary(FluTest$ILILag2)
 
 --------------------------------------------------------------------------------
 
+5.3
 
+> FluTrain$ILI[416]
+[1] 1.852736
+> FluTrain$ILI[417]
+[1] 2.12413
 
+FluTest$ILILag2[1] <- FluTrain$ILI[416]
+FluTest$ILILag2[2] <- FluTrain$ILI[417]
 
+--------------------------------------------------------------------------------
+
+5.4
+
+PredTest2 = exp(predict(FluTrend2, newdata = FluTest))
+SSE.testing <- sum((PredTest2 - FluTest$ILI)^2)
+RMSE.testing <- sqrt(SSE.testing / nrow(FluTest))
+# or
+RMSE.testing <- sqrt(mean((PredTest2 - FluTest$ILI)^2))
+
+--------------------------------------------------------------------------------
+
+5.5
+
+FluTrend1 0.7490645 vs FluTrend2 0.2942029
+
+--------------------------------------------------------------------------------
