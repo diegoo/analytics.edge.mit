@@ -1,0 +1,83 @@
+The Logit is just log(Odds), and looks like the linear regression equation. So the Logit is -1.5 + 3*1 - 0.5*5 = -1.
+Using the value of the Logit from the previous question, we have that Odds = e^(-1) = 0.3678794.
+Using the Logistic Response Function, we can compute that P(y = 1) = 1/(1 + e^(-Logit)) = 1/(1 + e^(1)) = 0.2689414.
+
+# install.packages("caTools")
+# library(caTools)
+
+quality = read.csv("quality.csv")
+str(quality)
+table(quality$PoorCare)
+set.seed(88)
+split = sample.split(quality$PoorCare, SplitRatio = 0.75)
+split
+qualityTrain = subset(quality, split == TRUE)
+qualityTest = subset(quality, split == FALSE)
+QualityLog = glm(PoorCare ~ OfficeVisits + Narcotics, data=qualityTrain, family=binomial)
+summary(QualityLog)
+predictTrain = predict(QualityLog, type="response")
+summary(predictTrain)
+tapply(predictTrain, qualityTrain$PoorCare, mean) # valor promedio predicho para cada outcome (el valor para 1 es mayor en promedio que para el valor 0, así que va bien)
+
+# queremos modelo con menor AIC. compara modelos sobre el mismo dataset, y penaliza cantidad de predictoras
+
+--------------------------------------------------------------------------------
+
+library(caTools)
+quality = read.csv("quality.csv")
+set.seed(88)
+split = sample.split(quality$PoorCare, SplitRatio = 0.75)
+qualityTrain = subset(quality, split == TRUE)
+qualityTest = subset(quality, split == FALSE)
+QualityLog <- glm(PoorCare ~ StartedOnCombination + ProviderCount, data = qualityTrain, family = binomial)
+summary(QualityLog)
+
+--------------------------------------------------------------------------------
+
+
+
+# Video 5
+
+# Confusion matrix for threshold of 0.5
+table(qualityTrain$PoorCare, predictTrain > 0.5)
+
+# Sensitivity and specificity
+10/25
+70/74
+
+# Confusion matrix for threshold of 0.7
+table(qualityTrain$PoorCare, predictTrain > 0.7)
+
+# Sensitivity and specificity
+8/25
+73/74
+
+# Confusion matrix for threshold of 0.2
+table(qualityTrain$PoorCare, predictTrain > 0.2)
+
+# Sensitivity and specificity
+16/25
+54/74
+
+
+
+# Video 6
+
+# Install and load ROCR package
+install.packages("ROCR")
+library(ROCR)
+
+# Prediction function
+ROCRpred = prediction(predictTrain, qualityTrain$PoorCare)
+
+# Performance function
+ROCRperf = performance(ROCRpred, "tpr", "fpr")
+
+# Plot ROC curve
+plot(ROCRperf)
+
+# Add colors
+plot(ROCRperf, colorize=TRUE)
+
+# Add threshold labels 
+plot(ROCRperf, colorize=TRUE, print.cutoffs.at=seq(0,1,by=0.1), text.adj=c(-0.2,1.7))
