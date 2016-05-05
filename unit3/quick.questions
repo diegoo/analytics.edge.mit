@@ -34,12 +34,14 @@ summary(QualityLog)
 
 --------------------------------------------------------------------------------
 
-
-
-# Video 5
-
-# Confusion matrix for threshold of 0.5
 table(qualityTrain$PoorCare, predictTrain > 0.5)
+   
+#   FALSE TRUE
+# 0    70    4
+# 1    15   10
+
+# Sensitivity = TP / TP + FN = 10 / (10 + 15)
+# Specificity = TN / TN + FP = 70 / (70 + 4)
 
 # Sensitivity and specificity
 10/25
@@ -47,6 +49,10 @@ table(qualityTrain$PoorCare, predictTrain > 0.5)
 
 # Confusion matrix for threshold of 0.7
 table(qualityTrain$PoorCare, predictTrain > 0.7)
+   
+#    FALSE TRUE
+#  0    73    1
+#  1    17    8
 
 # Sensitivity and specificity
 8/25
@@ -60,6 +66,8 @@ table(qualityTrain$PoorCare, predictTrain > 0.2)
 54/74
 
 
+
+--------------------------------------------------------------------------------
 
 # Video 6
 
@@ -81,3 +89,5 @@ plot(ROCRperf, colorize=TRUE)
 
 # Add threshold labels 
 plot(ROCRperf, colorize=TRUE, print.cutoffs.at=seq(0,1,by=0.1), text.adj=c(-0.2,1.7))
+
+--------------------------------------------------------------------------------
