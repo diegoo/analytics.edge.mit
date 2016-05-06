@@ -65,8 +65,6 @@ table(qualityTrain$PoorCare, predictTrain > 0.2)
 16/25
 54/74
 
-
-
 --------------------------------------------------------------------------------
 
 # Video 6
@@ -91,3 +89,11 @@ plot(ROCRperf, colorize=TRUE)
 plot(ROCRperf, colorize=TRUE, print.cutoffs.at=seq(0,1,by=0.1), text.adj=c(-0.2,1.7))
 
 --------------------------------------------------------------------------------
+
+QualityLog = glm(PoorCare ~ OfficeVisits + Narcotics, data=qualityTrain, family=binomial)
+predictTest = predict(QualityLog, type="response", newdata=qualityTest)
+ROCRpredTest = prediction(predictTest, qualityTest$PoorCare)
+auc = as.numeric(performance(ROCRpredTest, "auc")@y.values)
+# 0.7994792
+
+# interpretación de curva ROC: given a random patient from the dataset who actually received poor care, and a random patient from the dataset who actually received good care, the AUC is the perecentage of time that our model will classify which is which correctly.
