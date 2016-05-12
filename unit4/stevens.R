@@ -33,7 +33,7 @@ StevensTree.100mb = rpart(Reverse ~ Circuit + Issue + Petitioner + Respondent + 
 ## install.packages("randomForest")
 library(randomForest)
 
-StevensForest = randomForest(Reverse ~ Circuit + Issue + Petitioner + Respondent + LowerCourt + Unconst, data = Train, ntree=200, nodesize=25 )
+## StevensForest = randomForest(Reverse ~ Circuit + Issue + Petitioner + Respondent + LowerCourt + Unconst, data = Train, ntree=200, nodesize=25 )
 Train$Reverse = as.factor(Train$Reverse)
 Test$Reverse = as.factor(Test$Reverse)
 StevensForest = randomForest(Reverse ~ Circuit + Issue + Petitioner + Respondent + LowerCourt + Unconst, data = Train, ntree=200, nodesize=25 )
@@ -46,14 +46,15 @@ table(Test$Reverse, PredictForest)
 # VIDEO 6
 
 # Install cross-validation packages
-install.packages("caret")
+## install.packages("caret")
+## install.packages("e1071")
 library(caret)
-install.packages("e1071")
 library(e1071)
 
 # Define cross-validation experiment
 numFolds = trainControl( method = "cv", number = 10 )
 cpGrid = expand.grid( .cp = seq(0.01,0.5,0.01)) 
+# cpGrid == 0.18
 
 # Perform the cross validation
 train(Reverse ~ Circuit + Issue + Petitioner + Respondent + LowerCourt + Unconst, data = Train, method = "rpart", trControl = numFolds, tuneGrid = cpGrid )
@@ -66,3 +67,7 @@ PredictCV = predict(StevensTreeCV, newdata = Test, type = "class")
 table(Test$Reverse, PredictCV)
 (59+64)/(59+18+29+64)
 
+# plot the tree with prp(StevensTreeCV).
+# The tree with the best accuracy only has one split! When we were picking different minbucket parameters before, it seemed like this tree was probably not doing a good job of fitting the data. However, this tree with one split gives us the best out-of-sample accuracy. This reminds us that sometimes the simplest models are the best!
+
+# --------------------------------------------------------------------------------
