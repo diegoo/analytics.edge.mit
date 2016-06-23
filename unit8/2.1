@@ -1,0 +1,21 @@
+capital gains    = 0.30 * ((precio.actual * shares.sold) - (precio.original * shares.sold))
+transaction cost = 0.01 * (precio.actual * shares.sold)
+profit           = (precio.actual * shares.sold) - (0.30 * ((precio.actual * shares.sold) - (precio.original * shares.sold))) - (0.01 * (precio.actual * shares.sold))
+
+## respuesta oficial:
+
+# In the optimal solution, the decision variables with non-zero values are those corresponding to Yahoo!, Microsoft, and Intel.
+# You can set up this optimization problem as follows. Suppose that you add a column to the end of your table that indicates the number of shares to sell (the decision variables). The decision variables will therefore be in cells G6:G13.
+# Then the objective formula is: SUMPRODUCT(F6:F13;(C6:C13-G6:G13))
+# And the cash constraint is given by the following formula:
+# SUMPRODUCT(G6:G13;E6:E13) - 0.3*(SUMPRODUCT(G6:G13;E6:E13) - SUMPRODUCT(G6:G13;D6:D13)) - 0.01*SUMPRODUCT(G6:G13;E6:E13) >= 10000
+# Don't forget to also bound all of your decision variables to be less than or equal to 150, and to be non-negative.
+
+## 2.2
+
+26773,6627073482
+
+## 2.3
+
+367,723298056
+
