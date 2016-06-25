@@ -1,0 +1,37 @@
+## 1.1 respuesta oficial
+
+After setting up and solving the problem, the objective value of the solution is $1,382,544.33.
+
+The formula for the objective is:
+
+SUMPRODUCT(B53:E59;B25:E31) + SUMPRODUCT(B53:E59;B35:E41)
+
+You should select that you want to minimize the objective in Solver.
+
+The formulas for the constraints are as follows:
+
+Ambrosi No Extra Fine Yarn: B53 = 0
+
+De Blasi No Extra Fine Yarn: B56 = 0
+
+Ambrosi Capacity: SUMPRODUCT(B53:E53;B5:E5) <= B15
+
+Bresciani Capacity: SUMPRODUCT(B54:E54;B6:E6) <= B16
+
+Castri Capacity: SUMPRODUCT(B55:E55;B7:E7) <= B17
+
+De Blasi Capacity: SUMPRODUCT(B56:E56;B8:E8) <= B18
+
+Estensi Capacity: SUMPRODUCT(B57:E57;B9:E9) <= B19
+
+Filatoi Riuniti Capacity: SUMPRODUCT(B58:E58;B10:E10) <= B20
+
+Giuliani Capacity: SUMPRODUCT(B59:E59;B11:E11) <= B21
+
+Extra Fine Demand: SUM(B53:B59) >= B45
+
+Fine Demand: SUM(C53:C59) >= B46
+
+Medium Demand: SUM(D53:D59) >= B47
+
+Coarse Demand: SUM(E53:E59) >= B48
