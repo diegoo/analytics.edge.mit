@@ -47,3 +47,15 @@ table(test$RaisedFedFunds, model.5.test.predictions > 0.5)
 ##   FALSE TRUE
 ## 0    60   27
 ## 1    31   57
+
+library(ROCR)
+model.5.roc.test <- prediction(model.5.test.predictions, test$RaisedFedFunds)
+as.numeric(performance(model.5.roc.test, "auc")@y.values)
+
+## respuesta oficial: The AUC is the proportion of time the model can differentiate between a randomly selected true positive and true negative.
+
+model.5.test.perf = performance(model.5.roc.test, "tpr", "fpr") # true positive rate, false positive rate
+plot(model.5.test.perf)
+
+## A model with threshold 0 predicts 1 for all observations, yielding a 100% true positive rate and a 100% false positive rate. => logistic regression threshold = 0
+
