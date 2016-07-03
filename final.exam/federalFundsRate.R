@@ -59,3 +59,15 @@ plot(model.5.test.perf, colorize=TRUE)
 
 ## A model with threshold 0 predicts 1 for all observations, yielding a 100% true positive rate and a 100% false positive rate. => logistic regression threshold = 0
 
+library(caret)
+set.seed(201)
+train.control <- trainControl(method = "cv", number = 10)
+cp.grid <- expand.grid(.cp = seq(0.001,0.05, 0.001))
+best.cp.selection <- train(RaisedFedFunds ~ PreviousRate+Streak+Unemployment+HomeownershipRate+DemocraticPres+MonthsUntilElection, data = train, method = "rpart", trControl = train.control, tuneGrid = cp.grid)
+
+model.15 <- rpart(RaisedFedFunds ~ PreviousRate+Streak+Unemployment+HomeownershipRate+DemocraticPres+MonthsUntilElection, data = train, method="class", cp = 0.016)
+library(rpart.plot)
+prp(cart)
+
+model.15.predictions <- predict(model.15, newdata = test, type = "class")
+table(test$RaisedFedFunds, model.15.predictions)
